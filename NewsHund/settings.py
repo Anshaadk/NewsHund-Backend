@@ -121,9 +121,9 @@ ASGI_APPLICATION = 'NewsHund.asgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': "NewsHund",
-        'USER': "newshund",
-        'PASSWORD': "1234",
+        'NAME': "anshad",
+        'USER': "anshad_user",
+        'PASSWORD': "eW5QeSClao84rp85tGgQabB85DC6Npc5",
           # 5432 by default
     }
 }
