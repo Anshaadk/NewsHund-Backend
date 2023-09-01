@@ -124,7 +124,7 @@ DATABASES = {
         'NAME': "anshad",
         'USER': "anshad_user",
         'PASSWORD': "eW5QeSClao84rp85tGgQabB85DC6Npc5",
-          # 5432 by default
+        
     }
 }
 
