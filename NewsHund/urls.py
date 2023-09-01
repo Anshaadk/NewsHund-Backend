@@ -23,8 +23,6 @@ from user_side import routing
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('admin_side/',include('admin_side.urls')),
-    path('staff_side/',include('staff_side.urls')),
     path('user_side/',include('user_side.urls')),
     path('ws/', include(routing.websocket_urlpatterns)),
 
