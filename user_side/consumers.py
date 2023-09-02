@@ -6,7 +6,7 @@ from django.db.models import Q
 from channels.layers import get_channel_layer
 from channels.auth import get_user
 from channels.db import database_sync_to_async
-from .models import Room, Message,User
+
 # from user_side.models import Follow, Notification, News
 import json
 from django.dispatch import receiver
@@ -16,6 +16,7 @@ from django.db.models.signals import pre_save,post_save,post_delete
 
 class ChatConsumer(WebsocketConsumer):
     def connect(self):
+        from .models import Room, Message,User
         self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
         print(self.room_name,'aksnkajshdkajhda______________ASSA_____________________+')
         k=self.room_name
@@ -47,11 +48,13 @@ class ChatConsumer(WebsocketConsumer):
             self.accept()
     
     def disconnect(self, close_code):
+        from .models import Room, Message,User
         async_to_sync(self.channel_layer.group_discard)(
             self.room_group_name, self.channel_name
         )
 
     def receive(self, text_data):
+        from .models import Room, Message,User
         text_data_json = json.loads(text_data)
         message = text_data_json["message"]
         sender_id = int(text_data_json['sender_id'])  # Convert sender_id to an integer
@@ -76,6 +79,7 @@ class ChatConsumer(WebsocketConsumer):
         print('succsess')
         
     def chat_message(self, event):
+        from .models import Room, Message,User
         print(event,'____________p___________')
         message = event["message"]
         sender = event["sender"]
