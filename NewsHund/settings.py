@@ -127,8 +127,8 @@ DATABASES = {
         'NAME': 'anshad',            # Database name
         'USER': 'anshad_user',       # Database user
         'PASSWORD': 'eW5QeSClao84rp85tGgQabB85DC6Npc5',  # Database user's password
-        'HOST': 'dpg-cjot4he1208c738e8dlg-a',  # Hostname or IP address of the PostgreSQL server
-        'PORT': '',                  # Leave empty for default PostgreSQL port (5432)
+        # 'HOST': 'dpg-cjot4he1208c738e8dlg-a',  # Hostname or IP address of the PostgreSQL server
+        # 'PORT': '',                  # Leave empty for default PostgreSQL port (5432)
     }
 }
 
