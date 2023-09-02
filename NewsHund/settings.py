@@ -124,12 +124,14 @@ ASGI_APPLICATION = 'NewsHund.asgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': "anshad",
-        'USER': "anshad_user",
-        'PASSWORD': "eW5QeSClao84rp85tGgQabB85DC6Npc5",
-          # 5432 by default
+        'NAME': 'anshad',            # Database name
+        'USER': 'anshad_user',       # Database user
+        'PASSWORD': 'eW5QeSClao84rp85tGgQabB85DC6Npc5',  # Database user's password
+        'HOST': 'dpg-cjot4he1208c738e8dlg-a',  # Hostname or IP address of the PostgreSQL server
+        'PORT': '',                  # Leave empty for default PostgreSQL port (5432)
     }
 }
+
 
 
 # Password validation
