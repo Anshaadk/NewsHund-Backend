@@ -190,19 +190,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-# EMAIL_HOST_USER=env('EMAIL_HOST_USER')
-# EMAIL_HOST_PASSWORD=env('EMAIL_HOST_PASSWORD')
-EMAIL_HOST_USER='muhammedanshadmdi6@gmail.com'
-EMAIL_HOST_PASSWORD='xijympbwrbmqpfme'
+EMAIL_HOST_USER=env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD=env('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS=True
 
 
 AUTH_USER_MODEL = 'user_side.User'
 
-# API_KEY = env('API_KEY')
-# RAZORPAY_SECRET_KEY = env('RAZORPAY_SECRET_KEY')
-API_KEY='rzp_test_aCOPLFUFmC265M'
-RAZORPAY_SECRET_KEY='xOMWffWBSmuJi5y06YT3aq4N'
+API_KEY = env('API_KEY')
+RAZORPAY_SECRET_KEY = env('RAZORPAY_SECRET_KEY')
 
 razorpay_client = razorpay.Client(auth=(API_KEY, RAZORPAY_SECRET_KEY))
 
