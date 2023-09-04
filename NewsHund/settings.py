@@ -66,10 +66,6 @@ INSTALLED_APPS = [
     'django_cron',
     'stripe',
     'django_cleanup.apps.CleanupConfig',
-
-    
-    
-
 ]
 
 
@@ -85,11 +81,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOWED_ORIGINS = [
-   
-    "http://localhost:5173",
-    
-]
+CORS_ALLOWED_ORIGINS = env("CORS_ORIGINS", default="").split(",")
 
 
 
@@ -208,7 +200,6 @@ razorpay_client = razorpay.Client(auth=(API_KEY, RAZORPAY_SECRET_KEY))
 
 stripe.api_key = 'sk_test_51NYMKpSC5bTWQxmddrBf1kVS9CTBcwpaRvfBrjKVikB7KeNIdFNXLfuWQFh3NE5TE0KCwIHPtzf6ZeO9qCQDd9Y9006KkDt31O' 
 
-CORS_ALLOW_ALL_ORIGINS = True
 
 STRIPE_SECRET_KEY = 'sk_test_51NYMKpSC5bTWQxmddrBf1kVS9CTBcwpaRvfBrjKVikB7KeNIdFNXLfuWQFh3NE5TE0KCwIHPtzf6ZeO9qCQDd9Y9006KkDt31O'  # Replace with your Stripe secret key
 STRIPE_PUBLIC_KEY = 'pk_test_51NYMKpSC5bTWQxmdX0tAI4oxyxQwofBkLLve0jCroJxsSGYGJYoRfgYbwQzRR9dQlvB0geCM7I2oxaI4GqY6mk9E008zJnUOzC'
