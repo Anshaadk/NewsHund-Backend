@@ -29,9 +29,11 @@ class UserSerializer(serializers.ModelSerializer):
         return user
     
 class ProfileSerializer(serializers.ModelSerializer):
+    profile_image = serializers.ImageField(max_length=None, use_url=True)
     class Meta:
         model = User
         fields = '__all__'
+
   
 class PaymentResponseSerializer(serializers.Serializer):
     message = serializers.CharField()
@@ -170,6 +172,7 @@ class FollowSerializer(serializers.ModelSerializer):
         model = Follow
         fields = "__all__"
         
+    
         
 class SubcategorySerializers(serializers.ModelSerializer):
     

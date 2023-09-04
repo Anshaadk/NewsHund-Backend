@@ -121,24 +121,19 @@ ASGI_APPLICATION = 'NewsHund.asgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-        
-#         'NAME': env('NAME'),           
-#         'USER': env('USER'),      # Database user
-#         'PASSWORD': env('PASSWORD'),  # Database user's password
-#         'HOST': env('HOST'),  # Hostname or IP address of the PostgreSQL server
-#         'PORT': '',                  # Leave empty for default PostgreSQL port (5432)
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        
+        'NAME': env('NAME'),           
+        'USER': env('USER'),      # Database user
+        'PASSWORD': env('PASSWORD'),  # Database user's password
+        'HOST': env('HOST'),  # Hostname or IP address of the PostgreSQL server
+        'PORT': '',                  # Leave empty for default PostgreSQL port (5432)
     }
 }
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

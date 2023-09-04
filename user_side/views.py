@@ -81,15 +81,19 @@ class AuthView(TokenObtainPairView):
 
 
 
-class UserDetailView(APIView):
-      def get(self, request, pk):
-        try:
-            user = User.objects.get(pk=pk)
-            serializer = ProfileSerializer(user)
-            return Response(serializer.data)
-        except User.DoesNotExist:
-            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+class UserDetailView(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = ProfileSerializer  # Use your ProfileSerializer
 
+    def get(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
+
+    def handle_exception(self, exc):
+        if isinstance(exc, User.DoesNotExist):
+            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+        return super().handle_exception(exc)
 
 
 
@@ -574,17 +578,19 @@ class CommentListView(generics.ListAPIView):
         return queryset
     
     
-class FollowingListView(APIView):
-    def get(self, request, user_id):
-        followings = Follow.objects.filter(following_user_id=user_id)
-        serializer = FollowSerializer(followings, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+class FollowingListView(generics.ListAPIView):
+    serializer_class = FollowSerializer
 
-class FollowersListView(APIView):
-    def get(self, request, user_id):
-        followers = Follow.objects.filter(followed_user_id=user_id)
-        serializer = FollowSerializer(followers, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        return Follow.objects.filter(following_user_id=user_id)
+
+class FollowersListView(generics.ListAPIView):
+    serializer_class = FollowSerializer
+
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        return Follow.objects.filter(followed_user_id=user_id)
     
     
 class CategoryViewSet(viewsets.ModelViewSet):
