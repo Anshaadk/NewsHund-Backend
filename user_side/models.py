@@ -49,7 +49,7 @@ class User(AbstractBaseUser):
     is_active = models.BooleanField(default=False)
     followers_count=models.PositiveIntegerField(default=0)
     following_count=models.PositiveIntegerField(default=0)
-
+    
     subscription_expiration = models.DateTimeField(null=True, blank=True)
 
 
@@ -106,6 +106,7 @@ from django.core.files.base import ContentFile
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from io import BytesIO
 from PIL import Image
+from django.db.models import Avg
 
 class News(models.Model):
     CHOOSE = (
@@ -126,6 +127,12 @@ class News(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     subcategory = models.ForeignKey(Subcategory, on_delete=models.CASCADE)
     Date=models.DateTimeField(auto_now_add=True)
+    view_count = models.BigIntegerField(default=0)
+    average_rating = models.DecimalField(max_digits=3, decimal_places=2, default=0)
+    total_ratings = models.PositiveIntegerField(default=0)
+
+    
+
 
     
     def crop_image(self, image_field_name, aspect_ratio=(14.5, 9)):
@@ -421,3 +428,38 @@ class Comments(models.Model):
     news=models.ForeignKey(News,on_delete=models.CASCADE)
     text = models.CharField( max_length=255)
     time=models.TimeField( auto_now_add=True)
+    
+
+
+class Rating(models.Model):
+    RATING_CHOICES = (
+        (1, '1'),
+        (2, '2'),
+        (3, '3'),
+        (4, '4'),
+        (5, '5'),
+    )
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    news = models.ForeignKey(News, on_delete=models.CASCADE)
+    rating = models.IntegerField(choices=RATING_CHOICES)
+
+
+    
+
+
+@receiver(post_save, sender=Rating)
+def update_average_rating(sender, instance, **kwargs):
+    news_article = instance.news
+    ratings = Rating.objects.filter(news=news_article)
+    
+    # Calculate the average rating for the news article
+    if ratings.exists():
+        average_rating = ratings.aggregate(Avg('rating'))['rating__avg']
+    else:
+        average_rating = 0
+    
+    # Update the news article's average rating and total ratings
+    news_article.average_rating = average_rating
+    news_article.total_ratings = ratings.count()
+    news_article.save()

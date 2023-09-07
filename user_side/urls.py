@@ -20,6 +20,7 @@ router.register(r'subcategories_viewset', SubcategoryViewSet)
 
 
 
+
 urlpatterns = [
     #login register
     path('sendotp/', SendOtpView.as_view(), name='sendotp'),
@@ -101,6 +102,16 @@ urlpatterns = [
     path('api/staff_paymentdashbord/<int:pk>/',staff_paymentdashboard.as_view()),
     path('api/staff_newsearnning_dashboard/<int:pk>/',Staff_Earning_wallet_dashboard.as_view()),
     
+    
+    #rating
+    path('api/ratings/', RatingCreateView.as_view(), name='rating-create'),
+    path('api/ratings/<int:user_id>/', RatingUserList.as_view(), name='rating-create'),
+    path('api/ratingslist/', RatingListing.as_view(), name='rating-create'),
+    
+    #block ublock
+    # path('api/users/', UserListView.as_view(), name='user-list'),
+    # path('api/block-user/', BlockUserView.as_view(), name='block-user'),
+    # path('api/unblock-user/', UnblockUserView.as_view(), name='unblock-user')
     
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 

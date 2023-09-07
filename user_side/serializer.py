@@ -210,5 +210,17 @@ class staff_pay_dashbord_serilizer(serializers.ModelSerializer):
         fields = '__all__'
         
         
-        
+class RatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Rating
+        fields = '__all__'
+
+class UserSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'email', 'username', 'is_blocked')
+
+class BlockUserSerializer(serializers.Serializer):
+    user_to_block_id = serializers.IntegerField()
+
 

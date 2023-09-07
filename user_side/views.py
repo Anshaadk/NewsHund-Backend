@@ -111,6 +111,13 @@ class NewsCreateView(generics.CreateAPIView):
 class NewsRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
     queryset = News.objects.all()
     serializer_class = NewsSerializers
+    
+    def retrieve(self, request, *args, **kwargs):
+        print('views_count annn')
+        instance = self.get_object()
+        instance.view_count += 1
+        instance.save()
+        return super().retrieve(request, *args, **kwargs)
     # permission_classes = [IsAuthenticated]  # Requires authentication for retrieving, updating, and deleting news
 
 class NewsUpdateView(generics.UpdateAPIView):
@@ -621,3 +628,72 @@ class Staff_Earning_wallet_dashboard(generics.ListAPIView):
         user = self.kwargs['pk']
         queryset =WalletTransaction.objects.filter(receiver=user)
         return queryset
+    
+
+   
+class RatingCreateView(generics.CreateAPIView):
+    queryset = Rating.objects.all()
+    serializer_class = RatingSerializer
+    
+
+class RatingUserList(generics.ListAPIView):
+    serializer_class = RatingSerializer
+    
+    def get_queryset(self):
+        user = self.kwargs['user_id']
+        queryset =Rating.objects.filter(user=user)
+        return queryset
+    
+class RatingListing(generics.ListAPIView):
+    queryset = Rating.objects.all()
+    serializer_class = RatingSerializer
+    
+    
+    
+    
+# class UserListView(generics.ListAPIView):
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializers
+    
+    
+    
+# from rest_framework import permissions
+
+# class IsAdminPermission(permissions.BasePermission):
+#     def has_permission(self, request, view):
+#         print(request.user)
+#         # Check if the user is authenticated and has an admin role
+#         return request.user and request.user.is_authenticated and request.user.is_admin
+
+# class BlockUserView(APIView):
+#     permission_classes = [IsAdminPermission]  # Use the custom permission here
+
+#     def post(self, request):
+#         serializer = BlockUserSerializer(data=request.data)
+#         if serializer.is_valid():
+#             user_to_block_id = serializer.validated_data['user_to_block_id']
+            
+#             # Get the user to block
+#             user_to_block = User.objects.get(pk=user_to_block_id)
+            
+#             # Block the user
+#             request.user.block_user(user_to_block)
+            
+#             return Response({'message': 'User blocked successfully'}, status=status.HTTP_200_OK)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+# class UnblockUserView(APIView):
+#     permission_classes = [IsAdminPermission]  # Allow unauthenticated users to access this view
+
+#     def post(self, request):
+#         serializer = BlockUserSerializer(data=request.data)
+#         if serializer.is_valid():
+#             user_to_unblock_id = serializer.validated_data['user_to_block_id']
+            
+#             # Get the user to unblock
+#             user_to_unblock = User.objects.get(pk=user_to_unblock_id)
+            
+#             # Unblock the user
+#             request.user.unblock_user(user_to_unblock)
+            
+#             return Response({'message': 'User unblocked successfully'}, status=status.HTTP_200_OK)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
