@@ -121,7 +121,7 @@ class News(models.Model):
     subject = models.CharField(max_length=50)
     photo1 = models.ImageField(upload_to='uploads')
     photo2 = models.ImageField(upload_to='uploads')
-    short_details = models.CharField(max_length=500)
+    short_details = models.TextField()
     full_description = models.TextField()
 
     plan = models.CharField(choices=CHOOSE, max_length=50)
@@ -185,8 +185,8 @@ class Trending_News(models.Model):
     user = models.ForeignKey('user_side.User', on_delete=models.CASCADE)
     photo1 = models.ImageField(upload_to='uploads')
     
-    short_banner = models.CharField(max_length=50)
-    description = models.CharField(max_length=999)
+    short_banner = models.TextField()
+    description = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
 
     
