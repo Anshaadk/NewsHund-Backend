@@ -107,7 +107,7 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from io import BytesIO
 from PIL import Image
 from django.db.models import Avg
-
+from django.core.files.uploadedfile import SimpleUploadedFile
 class News(models.Model):
     CHOOSE = (
         ('Free', 'Free'),
@@ -153,22 +153,14 @@ class News(models.Model):
         # Perform the cropping
         cropped_img = img.crop((left, top, right, bottom))
 
-        # Save the cropped image back to the model field
+        # Save the cropped image back to the model field without changing the file extension
         output_buffer = BytesIO()
-        cropped_img.save(output_buffer, format='JPEG')
-        setattr(self, image_field_name, InMemoryUploadedFile(
-            output_buffer,
-            None,
-            f"{image_field_name}.jpg",
-            'image/jpeg',
-            cropped_img.tell,
-            None
+        cropped_img.save(output_buffer, format=img.format)
+        setattr(self, image_field_name, SimpleUploadedFile(
+            getattr(self, image_field_name).name,
+            output_buffer.getvalue(),
+            content_type=f'image/{img.format.lower()}'
         ))
-
-    def save(self, *args, **kwargs):
-        self.crop_image('photo1')
-        self.crop_image('photo2')
-        super().save(*args, **kwargs)
         
     def __str__(self):
         return self.subject
@@ -220,21 +212,14 @@ class Trending_News(models.Model):
         # Perform the cropping
         cropped_img = img.crop((left, top, right, bottom))
 
-        # Save the cropped image back to the model field
+        # Save the cropped image back to the model field without changing the file extension
         output_buffer = BytesIO()
-        cropped_img.save(output_buffer, format='JPEG')
-        setattr(self, image_field_name, InMemoryUploadedFile(
-            output_buffer,
-            None,
-            f"{image_field_name}.jpg",
-            'image/jpeg',
-            cropped_img.tell,
-            None
+        cropped_img.save(output_buffer, format=img.format)
+        setattr(self, image_field_name, SimpleUploadedFile(
+            getattr(self, image_field_name).name,
+            output_buffer.getvalue(),
+            content_type=f'image/{img.format.lower()}'
         ))
-    def save(self, *args, **kwargs):
-        self.crop_image('photo1')
-        
-        super().save(*args, **kwargs)
         
     def __str__(self):
         return self.subject
