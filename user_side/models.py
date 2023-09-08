@@ -121,8 +121,9 @@ class News(models.Model):
     subject = models.CharField(max_length=50)
     photo1 = models.ImageField(upload_to='uploads')
     photo2 = models.ImageField(upload_to='uploads')
-    short_details = models.CharField(max_length=100)
-    full_description = models.CharField(max_length=999)
+    short_details = models.CharField(max_length=500)
+    full_description = models.TextField()
+
     plan = models.CharField(choices=CHOOSE, max_length=50)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     subcategory = models.ForeignKey(Subcategory, on_delete=models.CASCADE)
