@@ -118,7 +118,7 @@ class News(models.Model):
     )
     
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    subject = models.CharField(max_length=50)
+    subject = models.TextField()
     photo1 = models.ImageField(upload_to='uploads')
     photo2 = models.ImageField(upload_to='uploads')
     short_details = models.TextField()
