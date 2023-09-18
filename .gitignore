@@ -162,4 +162,5 @@ cython_debug/
 
 NewsHund/NewsHund/.env
 ./emuNews
-static/assets
+./static/assets
+/uploads
